@@ -1,14 +1,28 @@
-# AlgoRadar
+<p align="center">
+  <img src="social_assets/algoradar-hero.png" alt="AlgoRadar — competitive programming analytics" width="100%">
+</p>
 
-![AlgoRadar combined analysis](social_assets/algoradar-screenshot-combined-analysis.png)
+<p align="center">
+  <strong>AlgoRadar</strong> · Cross-platform CP analytics for Codeforces, LeetCode, and CodeChef
+</p>
 
-**Cross-platform competitive programming analytics.**
+<p align="center">
+  <a href="https://github.com/Shivampal157/AlgoRadar-CP"><img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"></a>
+  <img src="https://img.shields.io/badge/Streamlit-dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/Codeforces-API-1F8ACB?style=flat-square" alt="Codeforces">
+  <img src="https://img.shields.io/badge/LeetCode-GraphQL-FFA116?style=flat-square" alt="LeetCode">
+  <img src="https://img.shields.io/badge/license-MIT-5ee0a0?style=flat-square" alt="MIT">
+</p>
 
-I built AlgoRadar because I practice on Codeforces, LeetCode, and CodeChef at the same time, and none of those sites answer the question I actually care about: *which topics are holding my rating back, and what should I solve next?*
+I built AlgoRadar because I practice on **Codeforces**, **LeetCode**, and **CodeChef** at the same time, and none of those sites answer the question I actually care about: *which topics are holding my rating back, and what should I solve next?*
 
-Enter any mix of handles. AlgoRadar pulls live profile data, scores weak areas with an explainable model, and returns confidence / growth / stretch queues plus a solve-probability estimate for a target problem.
+Enter any mix of handles. The app pulls live profile data, scores weak areas with an explainable model, and returns **confidence / growth / stretch** queues plus a solve-probability estimate for a target problem.
 
 **Shivam Pal** · IIIT Agartala · [GitHub](https://github.com/Shivampal157) · Codeforces Specialist
+
+<p align="center">
+  <img src="social_assets/algoradar-pipeline.png" alt="Fetch, features, scorecard, practice queues" width="100%">
+</p>
 
 ## What it does
 
@@ -21,21 +35,22 @@ Enter any mix of handles. AlgoRadar pulls live profile data, scores weak areas w
 - Optional MiniLM matcher for similar-but-harder problems
 - Streamlit dashboard with cached API responses for repeat runs
 
-## Screens
+## Product screens
 
-### Combined analysis
+<p align="center">
+  <img src="social_assets/algoradar-screenshot-combined-analysis.png" alt="Combined analysis dashboard" width="100%">
+</p>
+<p align="center"><em>Combined analysis — one profile across CF / LC / CC</em></p>
 
-![Combined analysis dashboard](social_assets/algoradar-screenshot-combined-analysis.png)
+<p align="center">
+  <img src="social_assets/algoradar-screenshot-recommendations-overview.png" alt="Recommendation queues" width="100%">
+</p>
+<p align="center"><em>Practice queues split into confidence, growth, and stretch</em></p>
 
-### Recommendations
-
-![Recommendations overview](social_assets/algoradar-screenshot-recommendations-overview.png)
-
-![Recommendation table](social_assets/algoradar-screenshot-recommendations-table.png)
-
-### Solve estimate
-
-![Solve estimate screen](social_assets/algoradar-screenshot-solve-probability.png)
+<p align="center">
+  <img src="social_assets/algoradar-screenshot-solve-probability.png" alt="Solve estimate scorecard" width="100%">
+</p>
+<p align="center"><em>Solve estimate — explainable probability for a target problem</em></p>
 
 ## How recommendations work
 

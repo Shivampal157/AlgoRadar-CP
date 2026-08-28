@@ -1290,6 +1290,12 @@ def inject_css() -> None:
         header[data-testid="stHeader"] {
           background: var(--bg);
         }
+        .stAppDeployButton,
+        div[data-testid="stToolbar"],
+        #MainMenu,
+        footer {
+          display: none !important;
+        }
         .block-container {
           max-width: 1380px;
           padding-top: 3.2rem;
