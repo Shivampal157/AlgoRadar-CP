@@ -5,9 +5,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "algoradar"
 version = "0.1.0"
-description = "AI Competitive Programming Weakness Analyzer and Problem Recommender"
+description = "Cross-platform competitive programming analytics and problem recommendations"
 readme = "README.md"
 requires-python = ">=3.10"
+authors = [{ name = "Shivam Pal" }]
 dependencies = [
   "numpy>=1.26",
   "pandas>=2.2",
