@@ -7,6 +7,7 @@
 </p>
 
 <p align="center">
+  <a href="https://algoradar-cp.streamlit.app"><img src="https://img.shields.io/badge/Live-algoradar--cp.streamlit.app-5ee0a0?style=flat-square" alt="Live demo"></a>
   <a href="https://github.com/Shivampal157/AlgoRadar-CP"><img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python"></a>
   <img src="https://img.shields.io/badge/Streamlit-dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Streamlit">
   <img src="https://img.shields.io/badge/Codeforces-API-1F8ACB?style=flat-square" alt="Codeforces">
@@ -17,6 +18,8 @@
 I built AlgoRadar because I practice on **Codeforces**, **LeetCode**, and **CodeChef** at the same time, and none of those sites answer the question I actually care about: *which topics are holding my rating back, and what should I solve next?*
 
 Enter any mix of handles. The app pulls live profile data, scores weak areas with an explainable model, and returns **confidence / growth / stretch** queues plus a solve-probability estimate for a target problem.
+
+**Live demo:** [algoradar-cp.streamlit.app](https://algoradar-cp.streamlit.app)
 
 **Shivam Pal** · IIIT Agartala · [GitHub](https://github.com/Shivampal157) · Codeforces Specialist
 
