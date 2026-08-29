@@ -53,16 +53,13 @@ def main() -> None:
         browser = playwright.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": 1600, "height": 980}, device_scale_factor=2)
         page.goto(BASE, wait_until="networkidle", timeout=60000)
-        page.wait_for_selector('[data-testid="stImage"] img', timeout=30000)
-        page.wait_for_function(
-            """() => {
-              const img = document.querySelector('[data-testid="stImage"] img');
-              return Boolean(img && img.complete && img.naturalWidth > 80);
-            }""",
-            timeout=30000,
-        )
+        page.wait_for_selector(".splash-hero", timeout=30000)
         page.wait_for_timeout(800)
         shot(page, "algoradar-screenshot-landing.png")
+        hero = page.locator(".splash-hero")
+        if hero.count():
+            hero.screenshot(path=str(OUT / "algoradar-hero.png"), type="png")
+            print("wrote", OUT / "algoradar-hero.png")
         fill_handles(page)
         page.get_by_text("Combined analysis", exact=True).click()
         page.get_by_text("Total solved").wait_for(timeout=30000)

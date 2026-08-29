@@ -9,7 +9,6 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from algoradar.codeforces import CodeforcesAPIError
-from algoradar.config import PROJECT_ROOT
 from algoradar.platforms import (
     analyze_external_platforms,
     build_combined_overview,
@@ -264,16 +263,42 @@ def render_sidebar() -> None:
 
 
 def render_landing_splash() -> None:
-    hero = PROJECT_ROOT / "social_assets" / "algoradar-hero.png"
-    if hero.exists():
-        st.image(str(hero), **stretch_kwargs(st.image))
-    st.markdown(
+    st.html(
         """
+        <div class="splash-hero">
+          <div class="splash-copy">
+            <h1>AlgoRadar</h1>
+            <p>Competitive Programming Analytics</p>
+          </div>
+          <div class="splash-viz">
+            <div class="splash-radar" aria-hidden="true">
+              <span class="ring r1"></span>
+              <span class="ring r2"></span>
+              <span class="ring r3"></span>
+              <span class="ring r4"></span>
+              <span class="axis h"></span>
+              <span class="axis v"></span>
+              <span class="tick t-n"></span>
+              <span class="tick t-s"></span>
+              <span class="tick t-e"></span>
+              <span class="tick t-w"></span>
+              <span class="blip b0"></span>
+              <span class="blip b1"></span>
+              <span class="blip b2"></span>
+              <span class="blip b3"></span>
+              <span class="blip b4"></span>
+            </div>
+            <div class="splash-pills">
+              <span><span class="dot"></span>Codeforces</span>
+              <span><span class="dot"></span>LeetCode</span>
+              <span><span class="dot"></span>CodeChef</span>
+            </div>
+          </div>
+        </div>
         <div class="splash-hint">
           Enter a Codeforces, LeetCode, or CodeChef handle in the sidebar, then click <strong>Analyze handles</strong>.
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
 
@@ -1354,14 +1379,148 @@ def inject_css() -> None:
           text-transform: uppercase;
           letter-spacing: 0;
         }
+        .splash-hero {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 36px;
+          min-height: 300px;
+          padding: 44px 52px;
+          border: 1px solid var(--border);
+          border-radius: 12px;
+          background: #050607;
+          overflow: hidden;
+        }
+        .splash-copy h1 {
+          margin: 0;
+          color: #ffffff;
+          font-size: clamp(44px, 5.6vw, 72px);
+          font-weight: 700;
+          letter-spacing: -0.045em;
+          line-height: 0.95;
+        }
+        .splash-copy p {
+          margin: 16px 0 0;
+          color: var(--green);
+          font-size: clamp(16px, 1.7vw, 22px);
+          font-weight: 600;
+          letter-spacing: -0.01em;
+        }
+        .splash-viz {
+          display: flex;
+          align-items: center;
+          gap: 28px;
+          flex: 0 0 auto;
+        }
+        .splash-radar {
+          position: relative;
+          width: 240px;
+          height: 240px;
+          flex: 0 0 240px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(79, 206, 138, 0.16) 0%, rgba(79, 206, 138, 0.04) 42%, transparent 72%);
+        }
+        .splash-radar .ring {
+          position: absolute;
+          inset: 0;
+          margin: auto;
+          border: 1.5px solid #2a6b4a;
+          border-radius: 50%;
+          box-sizing: border-box;
+        }
+        .splash-radar .r1 { width: 100%; height: 100%; border-color: #1f3d2e; }
+        .splash-radar .r2 { width: 75%; height: 75%; }
+        .splash-radar .r3 { width: 50%; height: 50%; }
+        .splash-radar .r4 { width: 25%; height: 25%; }
+        .splash-radar .axis {
+          position: absolute;
+          background: #2f7a54;
+        }
+        .splash-radar .axis.h {
+          left: 3%;
+          right: 3%;
+          top: 50%;
+          height: 1px;
+        }
+        .splash-radar .axis.v {
+          top: 3%;
+          bottom: 3%;
+          left: 50%;
+          width: 1px;
+        }
+        .splash-radar .tick {
+          position: absolute;
+          background: #3d8f64;
+        }
+        .splash-radar .t-n, .splash-radar .t-s {
+          left: 50%;
+          width: 12px;
+          height: 1px;
+          margin-left: -6px;
+        }
+        .splash-radar .t-e, .splash-radar .t-w {
+          top: 50%;
+          width: 1px;
+          height: 12px;
+          margin-top: -6px;
+        }
+        .splash-radar .t-n { top: 6px; }
+        .splash-radar .t-s { bottom: 6px; }
+        .splash-radar .t-e { right: 6px; }
+        .splash-radar .t-w { left: 6px; }
+        .splash-radar .blip {
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #5ee0a0;
+          box-shadow: 0 0 10px rgba(94, 224, 160, 0.95);
+          transform: translate(-50%, -50%);
+        }
+        .splash-radar .b0 { left: 50%; top: 50%; width: 9px; height: 9px; }
+        .splash-radar .b1 { left: 68%; top: 38%; }
+        .splash-radar .b2 { left: 34%; top: 64%; width: 7px; height: 7px; }
+        .splash-radar .b3 { left: 74%; top: 67%; width: 7px; height: 7px; }
+        .splash-radar .b4 { left: 40%; top: 32%; width: 6px; height: 6px; }
+        .splash-pills {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .splash-pills > span {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          min-width: 132px;
+          padding: 8px 14px;
+          border: 1px solid #2a3340;
+          border-radius: 999px;
+          background: #12161c;
+          color: #e8eef5;
+          font-size: 14px;
+          font-weight: 500;
+          white-space: nowrap;
+        }
+        .splash-pills .dot {
+          flex: 0 0 8px;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--green);
+          box-shadow: 0 0 8px rgba(79, 206, 138, 0.85);
+        }
         .splash-hint {
           margin-top: 18px;
           color: var(--muted);
           font-size: 15px;
         }
-        img[data-testid="stImage"] {
-          border-radius: 12px;
-          border: 1px solid var(--border);
+        @media (max-width: 980px) {
+          .splash-hero {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 32px 28px;
+            min-height: 0;
+          }
         }
         .hero {
           display: flex;

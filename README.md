@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="social_assets/algoradar-hero.png" alt="AlgoRadar — competitive programming analytics" width="100%">
+  <img src="social_assets/algoradar-hero.svg" alt="AlgoRadar — competitive programming analytics" width="100%">
 </p>
 
 <p align="center">
