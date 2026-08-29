@@ -38,6 +38,11 @@ Enter any mix of handles. The app pulls live profile data, scores weak areas wit
 ## Product screens
 
 <p align="center">
+  <img src="social_assets/algoradar-screenshot-landing.png" alt="AlgoRadar landing" width="100%">
+</p>
+<p align="center"><em>Open the app — radar landing, then drop in handles</em></p>
+
+<p align="center">
   <img src="social_assets/algoradar-screenshot-combined-analysis.png" alt="Combined analysis dashboard" width="100%">
 </p>
 <p align="center"><em>Combined analysis — one profile across CF / LC / CC</em></p>

@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from algoradar.codeforces import CodeforcesAPIError
+from algoradar.config import PROJECT_ROOT
 from algoradar.platforms import (
     analyze_external_platforms,
     build_combined_overview,
@@ -164,19 +165,22 @@ def main() -> None:
 
     source_label = _source_label(result, external_results)
     hero_title = _fallback_profile_title(active_args)
-    st.markdown(
-        f"""
-        <div class="hero">
-          <div>
-            <p class="eyebrow">AlgoRadar / competitive programming analytics</p>
-            <h1>{hero_title}</h1>
-            <p class="subcopy">Analyze Codeforces, CodeChef, and LeetCode handles in one place. Each platform stays separate, while recommendations and solve estimates use the handles you provide.</p>
-          </div>
-          <div class="source-pill">{source_label}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    if _provided_handle_count(active_args) == 0:
+        render_landing_splash()
+    else:
+        st.markdown(
+            f"""
+            <div class="hero">
+              <div>
+                <p class="eyebrow">AlgoRadar / competitive programming analytics</p>
+                <h1>{html.escape(hero_title)}</h1>
+                <p class="subcopy">Analyze Codeforces, CodeChef, and LeetCode handles in one place. Each platform stays separate, while recommendations and solve estimates use the handles you provide.</p>
+              </div>
+              <div class="source-pill">{html.escape(source_label)}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
     if settings_changed:
         st.info("Sidebar handles/settings changed. Click Analyze handles to run with the new values.")
@@ -259,7 +263,23 @@ def render_sidebar() -> None:
         )
 
 
+def render_landing_splash() -> None:
+    hero = PROJECT_ROOT / "social_assets" / "algoradar-hero.png"
+    if hero.exists():
+        st.image(str(hero), **stretch_kwargs(st.image))
+    st.markdown(
+        """
+        <div class="splash-hint">
+          Enter a Codeforces, LeetCode, or CodeChef handle in the sidebar, then click <strong>Analyze handles</strong>.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def render_combined_entry(result, external_results: dict, active_args: dict[str, str]) -> None:
+    if _provided_handle_count(active_args) == 0:
+        return
     if _provided_handle_count(active_args) < 2:
         st.info("Add at least two handles in the sidebar to unlock combined analysis.")
         return
@@ -382,7 +402,6 @@ def render_combined_profile(result, external_results: dict) -> None:
         show = platforms.rename(
             columns={
                 "platform": "Platform",
-                "handle": "Handle",
                 "status": "Status",
                 "solved": "Solved",
                 "current_rating": "Current rating",
@@ -392,6 +411,7 @@ def render_combined_profile(result, external_results: dict) -> None:
                 "signal": "Data available",
             }
         )
+        show = show.drop(columns=["handle"], errors="ignore")
         st.dataframe(show, **stretch_kwargs(st.dataframe), hide_index=True)
 
     with right:
@@ -1333,6 +1353,15 @@ def inject_css() -> None:
           font-size: 11px;
           text-transform: uppercase;
           letter-spacing: 0;
+        }
+        .splash-hint {
+          margin-top: 18px;
+          color: var(--muted);
+          font-size: 15px;
+        }
+        img[data-testid="stImage"] {
+          border-radius: 12px;
+          border: 1px solid var(--border);
         }
         .hero {
           display: flex;
