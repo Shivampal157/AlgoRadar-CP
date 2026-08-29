@@ -87,9 +87,21 @@ def main() -> None:
     render_sidebar()
 
     with st.sidebar:
-        codeforces_handle = st.text_input("Codeforces handle", key="codeforces_handle_input", help="Optional. Uses Codeforces submissions, ratings, tags, and verdicts.")
-        codechef_handle = st.text_input("CodeChef handle", key="codechef_handle_input", help="Optional. Enables CodeChef rating and practice analysis.")
-        leetcode_handle = st.text_input("LeetCode username", key="leetcode_handle_input", help="Optional. Enables LeetCode topic and contest analysis.")
+        codeforces_handle = st.text_input(
+            "Codeforces handle",
+            key="codeforces_handle_input",
+            help="Optional. Uses Codeforces submissions, ratings, tags, and verdicts.",
+        )
+        codechef_handle = st.text_input(
+            "CodeChef handle",
+            key="codechef_handle_input",
+            help="Optional. Enables CodeChef rating and practice analysis.",
+        )
+        leetcode_handle = st.text_input(
+            "LeetCode username",
+            key="leetcode_handle_input",
+            help="Optional. Enables LeetCode topic and contest analysis.",
+        )
         analyze = st.button("Analyze handles", **stretch_kwargs(st.button))
         force_refresh = st.toggle("Refresh platform caches", value=False)
         prefer_transformer = st.toggle(
@@ -97,7 +109,6 @@ def main() -> None:
             value=False,
             help="Optional. Uses a local MiniLM model for better similar-problem matching. Run scripts/verify_minilm.py once after installing optional dependencies.",
         )
-
         screen_options = [
             "Combined analysis",
             "Codeforces",
@@ -110,11 +121,7 @@ def main() -> None:
             st.session_state.screen = "Solve estimate"
         if st.session_state.get("screen") not in screen_options:
             st.session_state.screen = "Combined analysis"
-        screen = st.radio(
-            "Sections",
-            screen_options,
-            key="screen",
-        )
+        screen = st.radio("Sections", screen_options, key="screen")
 
     current_args = {
         "codeforces": codeforces_handle.strip(),
@@ -296,7 +303,7 @@ def render_landing_splash() -> None:
           </div>
         </div>
         <div class="splash-hint">
-          Enter a Codeforces, LeetCode, or CodeChef handle in the sidebar, then click <strong>Analyze handles</strong>.
+          Enter a handle in the left panel, then click <strong>Analyze handles</strong>.
         </div>
         """
     )
@@ -1331,15 +1338,24 @@ def inject_css() -> None:
         section[data-testid="stSidebar"] {
           background: var(--sidebar);
           border-right: 1px solid var(--border);
+          display: flex !important;
+          visibility: visible !important;
+          transform: none !important;
+          min-width: 18rem !important;
         }
         header[data-testid="stHeader"] {
           background: var(--bg);
         }
         .stAppDeployButton,
-        div[data-testid="stToolbar"],
-        #MainMenu,
         footer {
           display: none !important;
+        }
+        [data-testid="stSidebarCollapsedControl"],
+        [data-testid="collapsedControl"] {
+          display: flex !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          z-index: 1000000 !important;
         }
         .block-container {
           max-width: 1380px;

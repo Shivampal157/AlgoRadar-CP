@@ -11,7 +11,7 @@ headless = true
 runOnSave = true
 
 [client]
-toolbarMode = "minimal"
+toolbarMode = "viewer"
 showSidebarNavigation = false
 
 [browser]
