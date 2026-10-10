@@ -874,11 +874,24 @@ def _fetch_codechef_html(handle: str) -> str:
             "Accept": "text/html,application/xhtml+xml",
         },
         timeout=REQUEST_TIMEOUT_SECONDS,
+        allow_redirects=True,
     )
     if response.status_code == 404:
         return "CODECHEF_PROFILE_404"
     response.raise_for_status()
-    return response.text
+    # Detect redirect to homepage: CodeChef now redirects /users/{handle}
+    # to their homepage for non-existent users OR if the SPA changed structure.
+    # If the final URL is not the expected profile URL, treat as not-found.
+    final_url = response.url.rstrip("/")
+    expected_suffix = f"/users/{handle.lower()}"
+    if not final_url.lower().endswith(expected_suffix):
+        return "CODECHEF_PROFILE_404"
+    text = response.text
+    # Extra guard: if the handle doesn't appear anywhere in the page,
+    # it's a generic/redirected page, not the actual profile.
+    if handle.lower() not in text.lower():
+        return "CODECHEF_PROFILE_404"
+    return text
 
 
 def _fetch_codechef_problems(low: int, high: int, force_refresh: bool = False) -> pd.DataFrame:
@@ -1549,7 +1562,13 @@ def _first_text(text: str, patterns: list[str]) -> str:
 
 def _looks_like_missing_codechef_profile(html: str) -> bool:
     lowered = html[:4000].lower()
-    return "codechef_profile_404" in lowered or "user not found" in lowered or "page not found" in lowered
+    return (
+        "codechef_profile_404" in lowered
+        or "user not found" in lowered
+        or "page not found" in lowered
+        # New CodeChef SPA: profile page redirects to homepage which lacks profile markers
+        or ("rating-number" not in html and "all_rating" not in html and "ratingNumber" not in html)
+    )
 
 
 def _codechef_star_count(html: str) -> int:

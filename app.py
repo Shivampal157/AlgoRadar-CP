@@ -208,12 +208,12 @@ def main() -> None:
 
 def _needs_codeforces(screen: str, active_args: dict[str, str]) -> bool:
     if screen == "Combined analysis":
-        return _provided_handle_count(active_args) >= 2
+        return bool(active_args.get("codeforces"))
     return screen in {"Codeforces", "Recommendations", "Solve estimate"}
 
 
 def _external_handles_for_screen(screen: str, active_args: dict[str, str]) -> dict[str, str]:
-    combined_ready = screen == "Combined analysis" and _provided_handle_count(active_args) >= 2
+    combined_ready = screen == "Combined analysis" and _provided_handle_count(active_args) >= 1
     needs_leetcode = screen in {"LeetCode", "Recommendations", "Solve estimate"} or combined_ready
     needs_codechef = screen in {"CodeChef", "Recommendations", "Solve estimate"} or combined_ready
     return {
@@ -311,9 +311,6 @@ def render_landing_splash() -> None:
 
 def render_combined_entry(result, external_results: dict, active_args: dict[str, str]) -> None:
     if _provided_handle_count(active_args) == 0:
-        return
-    if _provided_handle_count(active_args) < 2:
-        st.info("Add at least two handles in the sidebar to unlock combined analysis.")
         return
     render_combined_profile(result, external_results)
 
